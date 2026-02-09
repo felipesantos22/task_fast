@@ -12,7 +12,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 #DATABASE_URL = "mysql+pymysql://root:123456@localhost:3306/dbtask"
 
 DATABASE_URL = os.getenv(
-    "DATABASE_URL",
+    "MYSQL_PUBLIC_URL",
     "mysql+pymysql://root@localhost:3306/dbtask"  # fallback local
 )
 
