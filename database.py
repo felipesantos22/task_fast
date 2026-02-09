@@ -11,13 +11,18 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 #MySql
 #DATABASE_URL = "mysql+pymysql://root:123456@localhost:3306/dbtask"
 
-DATABASE_URL = os.getenv(
-    "MYSQL_PUBLIC_URL",
-    "mysql+pymysql://root@localhost:3306/dbtask"  # fallback local
-)
+database_url = os.getenv("MYSQL_PUBLIC_URL")
 
-engine = create_engine(DATABASE_URL, echo=True)
+
+if database_url and database_url.startswith("mysql://"):
+    database_url = database_url.replace("mysql://", "mysql+pymysql://", 1)
+
+if not database_url:
+    database_url = "mysql+pymysql://root@localhost:3306/dbtask"
+
+engine = create_engine(database_url, echo=True)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
+
