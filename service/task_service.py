@@ -9,7 +9,7 @@ class TaskService:
     def __init__(self):
         self.repository = TaskRepository()
 
-    def create_user(self, db: Session, task_create: TaskCreate) -> Task:
+    def create_task(self, db: Session, task_create: TaskCreate) -> Task:
         return self.repository.create(db, task_create)
 
     def list_task(self, db: Session):

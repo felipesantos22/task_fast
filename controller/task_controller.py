@@ -18,7 +18,7 @@ def get_db():
 
 @router.post("/", response_model=TaskResponse)
 def create_task(task: TaskCreate, db: Session = Depends(get_db)):
-    return service.create_user(db, task)
+    return service.create_task(db, task)
 
 
 @router.get("/", response_model=list[TaskResponse])
@@ -36,7 +36,7 @@ def list_users_id(task_id: int, db: Session = Depends(get_db)):
 
 @router.put("/{task_id}", response_model=TaskResponse)
 def update_user(task_id: int, task: TaskUpdate, db: Session = Depends(get_db)):
-    return service.update_user(db, task_id, task)
+    return service.update_task(db, task_id, task)
 
 
 @router.delete("/{task_id}", response_model=MessageResponse)

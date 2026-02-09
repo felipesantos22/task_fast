@@ -1,10 +1,12 @@
 from sqlalchemy.orm import Session
 from model.task import Task
+from schema.task_schema import TaskCreate
 
 
 class TaskRepository:
 
-    def create(self, db: Session, task: Task) -> Task:
+    def create(self, db: Session, task: TaskCreate) -> Task:
+        task = Task(**task.model_dump())
         db.add(task)
         db.commit()
         db.refresh(task)
