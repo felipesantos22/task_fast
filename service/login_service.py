@@ -17,9 +17,11 @@ class LoginService:
     def create_access_token(self, payload: dict):
         to_encode = payload.copy()
 
-        expire = datetime.now(tz=ZoneInfo('America/Sao_Paulo')) + timedelta(
-            minutes=ACCESS_TOKEN_EXPIRE_MINUTES
-        )
+        # expire = datetime.now(tz=ZoneInfo('America/Sao_Paulo')) + timedelta(
+        # minutes=ACCESS_TOKEN_EXPIRE_MINUTES
+        # )
+
+        expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
 
         to_encode.update({"exp": expire})
 
