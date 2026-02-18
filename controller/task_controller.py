@@ -2,10 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import SessionLocal
 from schema.task_schema import TaskUpdate, TaskCreate, TaskDelete, MessageResponse, TaskResponse
+from service.login_service import LoginService
 from service.task_service import TaskService
 
 router = APIRouter(prefix="/tasks", tags=["tasks"])
 service = TaskService()
+service_login = LoginService()
 
 
 def get_db():
@@ -17,18 +19,18 @@ def get_db():
 
 
 @router.post("/", response_model=TaskResponse)
-def create_task(task: TaskCreate, db: Session = Depends(get_db)):
-    return service.create_task(db, task)
+def create_task(task: TaskCreate, user_id: int = Depends(service_login.verify_token), db: Session = Depends(get_db)):
+    return service.create_task(db, task, user_id)
 
 
 @router.get("/", response_model=list[TaskResponse])
-def list_tasks(db: Session = Depends(get_db)):
-    return service.repository.find_all(db)
+def list_tasks(db: Session = Depends(get_db), user_id: int = Depends(service_login.verify_token)):
+    return service.list_task(db, user_id)
 
 
 @router.get("/{task_id}", response_model=TaskResponse)
 def list_users_id(task_id: int, db: Session = Depends(get_db)):
-    task = service.repository.find_by_id(db, task_id)
+    task = service.list_task_by_id(db, task_id)
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
     return task

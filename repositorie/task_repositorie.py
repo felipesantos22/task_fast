@@ -5,15 +5,18 @@ from schema.task_schema import TaskCreate
 
 class TaskRepository:
 
-    def create(self, db: Session, task: TaskCreate) -> Task:
-        task = Task(**task.model_dump())
+    def create(self, db: Session, task_create: TaskCreate, user_id: int) -> Task:
+        task = Task(
+            **task_create.model_dump(),
+            user_id=user_id
+        )
         db.add(task)
         db.commit()
         db.refresh(task)
         return task
 
-    def find_all(self, db: Session, skip: int = 0, limit: int = 100):
-        return db.query(Task).offset(skip).limit(limit).all()
+    def find_all_by_user(self, db: Session, user_id: int):
+        return db.query(Task).filter(Task.user_id == user_id).all()
 
     def find_by_id(self, db: Session, task_id: int):
         return db.query(Task).filter(Task.id == task_id).first()

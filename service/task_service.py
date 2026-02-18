@@ -9,11 +9,11 @@ class TaskService:
     def __init__(self):
         self.repository = TaskRepository()
 
-    def create_task(self, db: Session, task_create: TaskCreate) -> Task:
-        return self.repository.create(db, task_create)
+    def create_task(self, db: Session, task_create: TaskCreate, user_id: int) -> Task:
+        return self.repository.create(db, task_create, user_id)
 
-    def list_task(self, db: Session):
-        return self.repository.find_all(db)
+    def list_task(self, db: Session, user_id: int):
+        return self.repository.find_all_by_user(db, user_id)
 
     def list_task_by_id(self, db: Session, task_id: int):
         return self.repository.find_by_id(db, task_id)

@@ -45,7 +45,16 @@ class LoginService:
                 SECRET_KEY,
                 algorithms=[ALGORITHM],
             )
-            return payload
+
+            user_id = payload.get("sub")
+
+            if user_id is None:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Invalid token payload",
+                )
+
+            return int(user_id)
 
         except PyJWTError:
             raise HTTPException(

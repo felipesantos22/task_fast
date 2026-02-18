@@ -14,5 +14,5 @@ app.include_router(task_router)
 app.include_router(user_router)
 app.include_router(login_router)
 
-#if __name__ == '__main__':
-    #uvicorn.run(app, host="127.0.0.1", port=8000)
+if __name__ == '__main__':
+    uvicorn.run(app, host="127.0.0.1", port=8000)

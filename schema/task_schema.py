@@ -2,7 +2,6 @@ from pydantic import BaseModel, ConfigDict
 
 class TaskCreate(BaseModel):
     task_name: str
-    user_id: int
 
 class TaskResponse(BaseModel):
     id: int
