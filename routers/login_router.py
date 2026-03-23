@@ -1,24 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import SessionLocal
-from model.user import User
+from models.user import User
 from schema.login_schema import LoginRequest
-from service.login_service import LoginService
+from services.login_service import LoginService
 from pwdlib import PasswordHash
+from dependencies import get_db
 
 pwd_context = PasswordHash.recommended()
 
 router = APIRouter(prefix="/login", tags=["login"])
 service = LoginService()
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
 
 @router.post("/")
 def login(data: LoginRequest, db: Session = Depends(get_db)):

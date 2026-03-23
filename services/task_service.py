@@ -1,8 +1,7 @@
 from sqlalchemy.orm import Session
-from repositorie.task_repositorie import TaskRepository
+from repositories.task_repositorie import TaskRepository
 from schema.task_schema import TaskCreate, TaskUpdate
-from model.task import Task
-
+from models.task import Task
 
 class TaskService:
 

@@ -1,4 +1,3 @@
-from zoneinfo import ZoneInfo
 from core.security import ACCESS_TOKEN_EXPIRE_MINUTES, SECRET_KEY, ALGORITHM
 from datetime import datetime, timedelta
 from fastapi import Depends, HTTPException, status

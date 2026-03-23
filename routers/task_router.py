@@ -1,22 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import SessionLocal
-from schema.task_schema import TaskUpdate, TaskCreate, TaskDelete, MessageResponse, TaskResponse
-from service.login_service import LoginService
-from service.task_service import TaskService
+from schema.task_schema import TaskUpdate, TaskCreate, MessageResponse, TaskResponse
+from services.login_service import LoginService
+from services.task_service import TaskService
+from dependencies import get_db
 
 router = APIRouter(prefix="/tasks", tags=["tasks"])
 service = TaskService()
 service_login = LoginService()
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
 
 @router.post("/", response_model=TaskResponse)
 def create_task(task: TaskCreate, user_id: int = Depends(service_login.verify_token), db: Session = Depends(get_db)):

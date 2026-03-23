@@ -1,11 +1,10 @@
 from sqlalchemy.orm import Session
-from repositorie.user_repositorie import UserRepository
-from model.user import User
+from repositories.user_repositorie import UserRepository
+from models.user import User
 from schema.user_schema import UserCreate, UserUpdate
 from pwdlib import PasswordHash
 
 password_hash = PasswordHash.recommended()
-
 
 class UserService:
 
