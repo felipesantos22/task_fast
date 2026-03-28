@@ -10,9 +10,8 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 
 #MySql
 #DATABASE_URL = "mysql+pymysql://root:123456@localhost:3306/dbtask"
-
+#28/03
 database_url = os.getenv("MYSQL_PUBLIC_URL")
-
 
 if database_url and database_url.startswith("mysql://"):
     database_url = database_url.replace("mysql://", "mysql+pymysql://", 1)
